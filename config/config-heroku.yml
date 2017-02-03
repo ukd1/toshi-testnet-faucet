@@ -1,0 +1,5 @@
+server: https://token-chat-service.herokuapp.com
+store: store
+redis:
+    envKey: REDIS_URL
+    timeout: 2000
