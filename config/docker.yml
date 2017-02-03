@@ -1,0 +1,9 @@
+server: https://token-chat-service.herokuapp.com
+token_ethereum_service_url: https://token-eth-service.herokuapp.com
+token_id_service_url: https://token-id-service.herokuapp.com
+store: /state
+redis:
+    envKey: REDIS_URL
+    timeout: 2000
+postgres:
+  envKey: DATABASE_URL

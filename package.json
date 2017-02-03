@@ -1,5 +1,29 @@
 {
+  "name": "token-app-js",
+  "version": "0.1.1",
+  "description": "",
+  "main": "src/bot.js",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "ethjs-unit": "^0.1.6",
+    "glob": "^7.1.1",
+    "js-yaml": "^3.7.0",
+    "mkdirp": "^0.5.1",
+    "pg": "^6.1.2",
+    "redis": "^2.6.5",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.3",
+    "sofa-js": "sofaprotocol/sofa-js#34c6aa7",
+    "word-wrap": "^1.2.1"
+  },
+  "devDependencies": {},
   "scripts": {
-    "postinstall": "cd bot && npm install"
-  }
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "console": "nodemon -L src/lib/Console.js config.yml"
+  },
+  "engines": {
+    "node": "7.4.0"
+  },
+  "author": "Token",
+  "license": "ISC"
 }

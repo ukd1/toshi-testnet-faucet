@@ -1,0 +1,44 @@
+{
+  "name": "Token Sofa App",
+  "description": "Foundation for building a SOFA app for Token (Chat Bot / Web View)",
+  "repository": "https://github.com/tokenbrowser/token-sofa-app",
+  "env": {
+    "TOKEN_APP_USERNAME": {
+      "description": "Choose a username for your app, no spaces",
+      "required": false
+    },
+    "TOKEN_APP_ID": {
+      "description": "Ethereum address that identifies your app"
+    },
+    "TOKEN_APP_PAYMENT_ADDRESS": {
+      "description": "Ethereum address that is used for ETH transactions"
+    },
+    "TOKEN_APP_SEED": {
+      "description": "12 word secret backup phrase"
+    }
+  },
+  "formation": {
+    "headless-client": {
+      "quantity": 1,
+      "size": "free"
+    },
+    "bot": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "addons": [
+      {
+        "plan": "heroku-redis:hobby-dev"
+      },{
+        "plan": "heroku-postgresql:hobby-dev"
+      }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },{
+      "url": "heroku/gradle"
+    }
+  ]
+}
