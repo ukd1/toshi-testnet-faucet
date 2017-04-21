@@ -1,3 +1,20 @@
-task stage {
-  //dummy to trigger Heroku gradle buildpack
+plugins {
+    id "us.kirchmeier.capsule" version "1.0.2"
+}
+
+apply plugin: 'java'
+
+repositories {
+  jcenter()
+  maven { url 'https://jitpack.io' }
+}
+
+task stage(type: FatCapsule) {
+  applicationClass 'com.bakkenbaeck.token.headless.TokenHeadlessClient'
+  baseName 'token-headless-client'
+  version = '0.1.0'
+}
+
+dependencies {
+  compile 'com.github.tokenbrowser:token-headless-client:v0.1.0'
 }
