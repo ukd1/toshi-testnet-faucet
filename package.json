@@ -13,7 +13,7 @@
     "redis": "^2.6.5",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.3",
-    "sofa-js": "sofaprotocol/sofa-js#34c6aa7",
+    "sofa-js": "sofaprotocol/sofa-js#v0.1.2",
     "word-wrap": "^1.2.1"
   },
   "devDependencies": {},

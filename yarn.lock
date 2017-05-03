@@ -331,10 +331,6 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-nan@>=2.0.0:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.5.1.tgz#d5b01691253326a97a2bbee9e61c55d8d60351e2"
-
 number-to-bn@1.7.0, number-to-bn@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/number-to-bn/-/number-to-bn-1.7.0.tgz#bb3623592f7e5f9e0030b1977bd41a0c53fe1ea0"
@@ -497,21 +493,15 @@ semver@4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.2.tgz#c7a07158a80bedd052355b770d82d6640f803be7"
 
-sleep@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/sleep/-/sleep-5.1.0.tgz#0e0b16205d9f9e3b0a95357744b103e797b4c7c1"
-  dependencies:
-    nan ">=2.0.0"
-
 sntp@1.x.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"
   dependencies:
     hoek "2.x.x"
 
-sofa-js@sofaprotocol/sofa-js#34c6aa7:
-  version "0.1.0"
-  resolved "https://codeload.github.com/sofaprotocol/sofa-js/tar.gz/34c6aa7"
+sofa-js@sofaprotocol/sofa-js#v0.1.2:
+  version "0.1.2"
+  resolved "https://codeload.github.com/sofaprotocol/sofa-js/tar.gz/acc940780bb16f94a31b33a7f9ebee8c392691b2"
   dependencies:
     ajv "^4.11.3"
     ethjs-unit "^0.1.6"
