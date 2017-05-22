@@ -8,4 +8,4 @@ RUN git checkout tags/v0.1.0
 
 RUN ./gradlew TokenHeadlessClientCapsule
 
-CMD ["java", "-jar", "build/libs/token-headless-0.1.0-capsule.jar", "config.yml"]
+CMD ["java", "-jar", "build/libs/token-headless-0.1.1-capsule.jar", "config.yml"]
