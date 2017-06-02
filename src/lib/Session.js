@@ -5,18 +5,22 @@ const pg = require('pg');
 const url = require('url')
 const unit = require('ethjs-unit');
 const SOFA = require('sofa-js');
+const Fiat = require('./Fiat')
+const Logger = require('./Logger');
+const EthService = require('./EthService')
+const IdService = require('./IdService')
 
 class Session {
-  constructor(bot, pgPool, config, address, onReady) {
+  constructor(bot, storage, config, address, onReady) {
     this.bot = bot;
     this.config = config;
-    this.pgPool = pgPool;
+    this.storage = storage;
 
     if (!fs.existsSync(this.config.store)) {
       mkdirp.sync(this.config.store);
     }
-    this.address = address;
-    this.path = this.config.store+'/'+address+'.json';
+
+    this.address = address || "anonymous";
     this.data = {
       address: this.address
     };
@@ -69,15 +73,55 @@ class Session {
   }
 
   reply(message) {
+    if (this.address == "anonymous") {
+      Logger.error("Cannot send messages to anonymous session");
+      return;
+    }
     this.bot.client.send(this.address, message);
+  }
+
+  balance(address, fiat_type) {
+    if (address) {
+      if (!address.startsWith("0x")) {
+        // assume fiat_type
+        fiat_type = address;
+        address = this.config.paymentAddress;
+      }
+    } else {
+      address = this.config.paymentAddress;
+    }
+    let getbal = EthService.getBalance(address);
+    if (!fiat_type || fiat_type.toLowerCase() == 'eth') {
+      fiat_type = 'ether';
+    }
+    if (fiat_type.toLowerCase() in unit.unitMap) {
+      return getbal.then((bal) => {
+        return Promise.resolve(unit.fromWei(bal, fiat_type.toLowerCase()));
+      });
+    } else {
+      return getbal.then((bal) => {
+        return Fiat.fetch().then((fiat) => {
+          return Promise.resolve(fiat[fiat_type.toUpperCase()].fromEth(unit.fromWei(bal, 'ether')));
+        });
+      });
+    }
+
   }
 
   sendEth(value, callback) {
     value = '0x' + unit.toWei(value, 'ether').toString(16)
+    return sendWei(value, callback);
+  }
+
+  sendWei(value, callback) {
+    if (!this.user.payment_address) {
+      if (callback) { callback(this, "Cannot send transactions to users with no payment address", null); }
+      return;
+    }
     this.bot.client.rpc(this, {
       method: "sendTransaction",
       params: {
-        to: this.get('paymentAddress'),
+        to: this.user.payment_address,
         value: value
       }
     }, (session, error, result) => {
@@ -86,8 +130,8 @@ class Session {
           status: "unconfirmed",
           value: value,
           txHash: result.txHash,
-          fromAddress: this.config.address,
-          toAddress: this.address
+          fromAddress: this.config.tokenIdAddress,
+          toAddress: this.user.payment_address
         }));
       }
       if (callback) { callback(session, error, result); }
@@ -95,6 +139,10 @@ class Session {
   }
 
   requestEth(value, message) {
+    if (!this.user.token_id) {
+      Logger.error("Cannot send transactions to users with no payment address");
+      return;
+    }
     value = '0x' + unit.toWei(value, 'ether').toString(16)
     this.reply(SOFA.PaymentRequest({
       body: message,
@@ -104,45 +152,33 @@ class Session {
   }
 
   load(onReady) {
-    this.execute('SELECT * from bot_sessions WHERE eth_address = $1', [this.address], (err, result) => {
-      if (err) { console.log(err) }
-      if (!err && result.rows.length > 0) {
-        this.data = result.rows[0].data
-        if (this.data._thread) {
-          this.thread = this.bot.threads[this.data._thread];
-        }
-        if (this.data._state) {
-          this.state = this.data._state;
-        }
-      } else {
-        this.data = {
-          address: this.address
-        };
+    this.storage.loadBotSession(this.address).then((data) => {
+      this.data = data;
+      if (this.data._thread) {
+        this.thread = this.bot.threads[this.data._thread];
       }
-      onReady()
+      if (this.data._state) {
+        this.state = this.data._state;
+      }
+      if (this.address != "anonymous") {
+        IdService.getUser(this.address)
+          .then((user) => {
+            this.user = user;
+            onReady();
+          })
+          .catch((err) => {
+            Logger.error("unable to get user details for user: " + this.address)
+          });
+      } else {
+        this.user = {};
+        onReady();
+      }
     });
   }
 
   flush() {
     this.data.timestamp = Math.round(new Date().getTime()/1000);
-    let query =  `INSERT INTO bot_sessions (eth_address, data)
-                  VALUES ($1, $2)
-                  ON CONFLICT (eth_address) DO UPDATE
-                  SET data = $2`;
-    this.execute(query, [this.address, this.data], (err, result) => {
-      if (err) { console.log(err) }
-    })
-  }
-
-  execute(query, args, cb) {
-    this.pgPool.connect((err, client, done) => {
-      if (err) { return cb(err) }
-      client.query(query, args, (err, result) => {
-        done(err);
-        if (err) { return cb(err) }
-        cb(null, result);
-      })
-    })
+    this.storage.updateBotSession(this.address, this.data);
   }
 
   get json() {

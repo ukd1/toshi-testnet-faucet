@@ -3,18 +3,19 @@
   "description": "Foundation for building a SOFA app for Token (Chat Bot / Web View)",
   "repository": "https://github.com/tokenbrowser/token-sofa-app",
   "env": {
-    "TOKEN_APP_USERNAME": {
-      "description": "Choose a username for your app, no spaces",
-      "required": false
-    },
-    "TOKEN_APP_ID": {
-      "description": "Ethereum address that identifies your app"
-    },
-    "TOKEN_APP_PAYMENT_ADDRESS": {
-      "description": "Ethereum address that is used for ETH transactions"
-    },
     "TOKEN_APP_SEED": {
       "description": "12 word secret backup phrase"
+    },
+    "TOKEN_APP_USERNAME": {
+      "description": "Choose a username for your app: letters, numbers, and underscores only"
+    },
+    "TOKEN_APP_NAME": {
+      "description": "Choose a display name - all characters allowed"
+    },
+    "NODE_MODULES_CACHE": {
+      "description": "Enable the often-troublesome npm/yarn cache",
+      "value": "false",
+      "required": false
     }
   },
   "formation": {

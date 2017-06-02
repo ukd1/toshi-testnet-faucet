@@ -30,7 +30,7 @@ class Console {
 
     this.rl.setPrompt(this.address+'> ');
 
-    this.channelName = this.config.address
+    this.channelName = this.config.tokenIdAddress
     let redisConfig = {
       host: this.config.redis.host,
       port: this.config.redis.port,
@@ -62,9 +62,9 @@ class Console {
     if (typeof message === "string") {
       message = SOFA.Message({body: message})
     }
-    this.publisher.publish(this.config.address, JSON.stringify({
+    this.publisher.publish(this.config.tokenIdAddress, JSON.stringify({
       sofa: message.string,
-      sender: this.config.address,
+      sender: this.config.tokenIdAddress,
       recipient: session.address
     }));
   }
@@ -78,7 +78,7 @@ class Console {
           var message = JSON.stringify({
             sofa: SOFA.Message({body: line}).string,
             sender: this.address,
-            recipient: this.config.address
+            recipient: this.config.tokenIdAddress
           });
           this.publisher.publish(this.channelName, message);
         }

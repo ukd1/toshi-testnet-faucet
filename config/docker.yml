@@ -5,5 +5,5 @@ store: /state
 redis:
     envKey: REDIS_URL
     timeout: 2000
-postgres:
+storage:
   envKey: DATABASE_URL
