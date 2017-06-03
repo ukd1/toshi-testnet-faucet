@@ -143,6 +143,8 @@ class WebsocketClient {
           }
         }
       }
+    } else if ('error' in message) {
+      console.log(`Message Error (${message['error']['code']}): ${message['error']['message']}`);
     } else if ('id' in message) {
       let caller = this._wscalls[message['id']];
       if (caller) {
