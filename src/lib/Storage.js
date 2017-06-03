@@ -106,7 +106,7 @@ class PSQLStore {
                  SET data = $2`;
     return new Promise((fulfill, reject) => {
       this._execute(query, [address, data], (err, result) => {
-        if (err) { console.log(err); reject(erro); }
+        if (err) { console.log(err); reject(err); }
         else { fulfill(); }
       });
     });
@@ -115,7 +115,7 @@ class PSQLStore {
   removeBotSession(address) {
     return new Promise((fulfill, reject) => {
       this._execute("DELETE from bot_sessions WHERE eth_address = $1", [address], (err, result) => {
-        if (err) { console.log(err); reject(erro); }
+        if (err) { console.log(err); reject(err); }
         else { fulfill(); }
       });
     });
