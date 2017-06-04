@@ -1,15 +1,16 @@
 const wrap = require('word-wrap');
 const chalk = require('chalk');
 const BN = require('bn.js');
-const unit = require('ethjs-unit');
 
 // NOTE: If these things also depend on Logger they get caught in a dependency loop,
 // this is a hacky way to break that loop
 let Fiat;
 let IdService;
+let unit;
 setTimeout(() => {
   Fiat = require('./Fiat');
   IdService = require('./IdService');
+  unit = require('./unit');
 });
 
 
