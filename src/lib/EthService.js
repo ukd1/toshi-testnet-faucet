@@ -144,7 +144,7 @@ class WebsocketClient {
         }
       }
     } else if ('error' in message) {
-      console.log(`Message Error (${message['error']['code']}): ${message['error']['message']}`);
+      Logger.error(`Message Error (${message['error']['code']}): ${message['error']['message']}`);
     } else if ('id' in message) {
       let caller = this._wscalls[message['id']];
       if (caller) {
@@ -168,7 +168,7 @@ class WebsocketClient {
   handle_error(e) {
     // captures unexpected errors that the websocket library
     // cannot handle gracefully (e.g. websocket server going down)
-    console.log("Websocket Error");
+    Logger.error("Websocket Error");
     this.maybe_reconnect();
   }
 
@@ -191,7 +191,7 @@ class EthService {
         return numberToBN(JSON.parse(body).unconfirmed_balance);
       })
       .catch((error) => {
-        console.log("Error getting balance for '" + address + "': " + error);
+        Logger.error("Error getting balance for '" + address + "': " + error);
       });
   }
 

@@ -39,13 +39,13 @@ class Client {
     this.publisher = redis.createClient(redisConfig);
 
     this.subscriber.on("error", function (err) {
-        console.log("Error " + err);
+        Logger.error("Error " + err);
     });
     this.rpcSubscriber.on("error", function (err) {
-        console.log("Error " + err);
+        Logger.error("Error " + err);
     });
     this.publisher.on("error", function (err) {
-        console.log("Error " + err);
+        Logger.error("Error " + err);
     });
 
     this.subscriber.on("message", (channel, message) => {
@@ -76,7 +76,7 @@ class Client {
               this.bot.onClientMessage(session, sofa);
             } else {
               if (!session.get('paymentAddress')) {
-                console.log('User has not sent Init message, sending InitRequest');
+                Logger.info('User has not sent Init message, sending InitRequest');
                 // since we don't register payment messages from untrusted
                 // sources, make sure we don't send it after an init either
                 if (sofa.type != 'Payment') {
@@ -109,7 +109,7 @@ class Client {
           });
         }
       } catch(e) {
-        console.log("On RPC Message Error: "+e);
+        Logger.error("On RPC Message Error: "+e);
       }
     });
     this.rpcSubscriber.subscribe(this.config.tokenIdAddress+JSONRPC_RESPONSE_CHANNEL);
@@ -170,13 +170,13 @@ class Client {
             }
           });
         }).catch((err) => {
-          console.log(err);
+          Logger.error(err);
         });
 
         this.store.setKey('lastTransactionTimestamp', this.eth.get_last_message_timestamp(this.config.paymentAddress));
       }, last_timestamp);
     }).catch((err) => {
-      console.log(err);
+      Logger.error(err);
     });
   }
 
