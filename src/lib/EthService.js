@@ -195,6 +195,22 @@ class EthService {
       });
   }
 
+  static getTransaction(hash) {
+    return rp(getUrl('/v1/tx/' + hash))
+      .then((body) => {
+        body = JSON.parse(body);
+        body.gasPrice = numberToBN(body.gasPrice);
+        body.gas = numberToBN(body.gas);
+        body.nonce = numberToBN(body.nonce);
+        body.value = numberToBN(body.value);
+        if (body.blockNumber) { body.blockNumber = numberToBN(body.blockNumber); }
+        return body;
+      })
+      .catch((error) => {
+        Logger.error("Unable to get transaction with hash: '" + hash + "': " + error);
+      });
+  }
+
   constructor(signing_key) {
     this.signing_key = signing_key;
     this.ws = null;
