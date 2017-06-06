@@ -110,7 +110,7 @@ class Session {
 
   sendEth(value, callback) {
     value = '0x' + unit.toWei(value, 'ether').toString(16)
-    return sendWei(value, callback);
+    return this.sendWei(value, callback);
   }
 
   sendWei(value, callback) {
