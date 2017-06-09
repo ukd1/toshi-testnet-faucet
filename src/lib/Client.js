@@ -64,6 +64,7 @@ class Client {
               for(let k in sofa.content) {
                 session.set(k, sofa.content[k]);
               }
+              this.bot.onClientMessage(session, sofa);
               let held = session.get('heldForInit')
               if (held) {
                 session.set('heldForInit', null)
