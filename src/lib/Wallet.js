@@ -4,6 +4,19 @@ var hash = require('hash.js')
 const keccak256 = require('js-sha3').keccak_256;
 const secp256k1 = new (elliptic.ec)('secp256k1');
 
+function bnToBuffer(bn, len) {
+  let buf1 = bn.toBuffer();
+  if (buf1.length == len) {
+    return buf1;
+  } else if (buf1.length > len) {
+    throw new Error("bn is too large to fit into requested length");
+  } else {
+    let buf2 = new Buffer(len).fill(0);
+    buf1.copy(buf2, 32 - buf1.length);
+    return buf2;
+  }
+}
+
 class Wallet {
   constructor(mnemonic, path) {
     let seed = bip39.mnemonicToSeedHex(mnemonic);
@@ -43,7 +56,7 @@ class Wallet {
         let hmac = hash.hmac(hash.sha512, chaincode);
         if (hardened) {
           hmac.update([0]);
-          hmac.update(keypair.getPrivate().toBuffer());
+          hmac.update(bnToBuffer(keypair.getPrivate(), 32));
           hmac.update(hash.utils.split32([n + (1 << 31)], 'big'));
         } else {
           let pubkey = keypair.getPublic().encode('', true);
@@ -54,7 +67,7 @@ class Wallet {
         let priv = secp256k1.keyFromPrivate(digest.slice(0, 32)).getPrivate();
         // add_assign
         priv = priv.add(keypair.getPrivate()).mod(secp256k1.curve.n);
-        keypair = secp256k1.keyFromPrivate(priv.toBuffer());
+        keypair = secp256k1.keyFromPrivate(bnToBuffer(priv, 32));
         chaincode = digest.slice(32);
         this._cache[curpath] = {
           keypair: keypair,
