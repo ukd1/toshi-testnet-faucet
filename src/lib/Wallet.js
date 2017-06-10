@@ -95,8 +95,8 @@ class PrivateKey {
     let datahash = keccak256(data);
     let sig = this.keypair.sign(datahash, { canonical: true });
     return "0x" +
-      hash.utils.toHex(sig.r.toBuffer()) +
-      hash.utils.toHex(sig.s.toBuffer()) +
+      hash.utils.toHex(bnToBuffer(sig.r, 32)) +
+      hash.utils.toHex(bnToBuffer(sig.s, 32)) +
       hash.utils.toHex([sig.recoveryParam]);
   }
 }
