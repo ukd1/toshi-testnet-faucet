@@ -1,5 +1,5 @@
 {
-  "name": "token-app-js",
+  "name": "toshi-app-js",
   "version": "0.1.4",
   "description": "",
   "main": "src/bot.js",
@@ -32,6 +32,6 @@
   "engines": {
     "node": "7.4.0"
   },
-  "author": "Token",
+  "author": "Toshi",
   "license": "ISC"
 }

@@ -1,6 +1,6 @@
-# Token SOFA App
+# Toshi SOFA App
 
-This repo helps you build a [Token app](https://www.tokenbrowser.com) in Javascript.
+This repo helps you build a [Toshi app](https://www.toshi.org) in Javascript.
 
 The sample bot can:
 
@@ -14,9 +14,9 @@ TODO
 * sending image messages
 * creating web view UIs
 
-## Launch your own Token app in 5 minutes
+## Launch your own Toshi app in 5 minutes
 
-Read our [guide to creating a Token app](http://developers.tokenbrowser.com/docs/creating-a-token-app).
+Read our [guide to creating a Toshi app](http://developers.toshi.org/docs/creating-a-token-app).
 
 When ready, fork this repo and deploy it to Heroku.
 
@@ -46,12 +46,12 @@ docker-compose down -v
 
 ## Architecture
 
-Deploying a Token app requires a few processes to run:
+Deploying a Toshi app requires a few processes to run:
 
-* **token-headless-client**<br>
-  This is a client we provide (similar to the iOS or Android client) that provides a wrapper around the Token backend services. It also handles end-to-end encrypting all messages using the Signal protocol. It is written in Java and runs in the background, proxying all the requests to amd from your bot.
+* **toshi-headless-client**<br>
+  This is a client we provide (similar to the iOS or Android client) that provides a wrapper around the Toshi backend services. It also handles end-to-end encrypting all messages using the Signal protocol. It is written in Java and runs in the background, proxying all the requests to amd from your bot.
 * **redis**<br>
-  We use redis pub/sub to provide a connection between the token-headless-client and your bot.
+  We use redis pub/sub to provide a connection between the toshi-headless-client and your bot.
 * **bot.js**<br>
   This is where all your app logic lives.
 * **postgres**<br>
@@ -61,4 +61,4 @@ Deploying a Token app requires a few processes to run:
 
 ## See also
 
-* [https://www.tokenbrowser.com]
+* [https://www.toshi.org]

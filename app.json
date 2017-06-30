@@ -1,7 +1,7 @@
 {
-  "name": "Token Sofa App",
-  "description": "Foundation for building a SOFA app for Token (Chat Bot / Web View)",
-  "repository": "https://github.com/tokenbrowser/token-sofa-app",
+  "name": "Toshi SOFA App",
+  "description": "Foundation for building a SOFA app for Toshi (Chat Bot / Web View)",
+  "repository": "https://github.com/toshiapp/toshi-sofa-app",
   "env": {
     "TOKEN_APP_SEED": {
       "description": "12 word secret backup phrase"

@@ -11,10 +11,10 @@ repositories {
 
 task stage(type: FatCapsule) {
   applicationClass 'com.bakkenbaeck.token.headless.TokenHeadlessClient'
-  baseName 'token-headless-client'
-  version = '0.1.3'
+  baseName 'toshi-headless-client'
+  version = '0.1.4'
 }
 
 dependencies {
-  compile 'com.github.tokenbrowser:token-headless-client:v0.1.3'
+  compile 'com.github.toshiapp:toshi-headless-client:v0.1.4'
 }
