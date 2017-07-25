@@ -131,6 +131,7 @@ class WebsocketClient {
   }
 
   handle_message(message) {
+    Logger.debug("handling websocket message: " + message);
     message = JSON.parse(message);
     if (message['method']) {
       if (message['method'] == 'subscription') {

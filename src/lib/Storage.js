@@ -58,7 +58,7 @@ function get_type(value) {
 
 class PSQLStore {
 
-  constructor(config) {
+  constructor(config, sslmode) {
     if (typeof config === 'object') {
       if (config.url) {
         config = parse_psql_url(config.url);
@@ -67,6 +67,9 @@ class PSQLStore {
       config = parse_psql_url(config);
     }
     this.config = config;
+    if (sslmode == 'require') {
+      this.config.ssl = sslmode;
+    }
     this.pgPool = new pg.Pool(this.config);
     this.pgPool.on('error', function (err, client) {
       console.error('idle client error', err.message, err.stack)

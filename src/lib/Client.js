@@ -23,7 +23,7 @@ class Client {
     Logger.info("PAYMENT ADDRESS KEY: " + this.config.paymentAddress);
 
     if (this.config.storage.postgres) {
-      this.store = new Storage.PSQLStore(this.config.storage.postgres);
+      this.store = new Storage.PSQLStore(this.config.storage.postgres, this.config.storage.sslmode);
     } else if (this.config.storage.sqlite) {
       this.store = new Storage.SqliteStore(this.config.storage.sqlite);
     }
@@ -87,6 +87,10 @@ class Client {
                   values: ['paymentAddress', 'language']
                 }));
               } else if (sofa.type != 'Payment') { // Only forward non payment types
+                if (sofa.type == 'Message' && sofa.body == '') {
+                  // ignore empty messages (a.k.a. bot wake up messages)
+                  return;
+                }
                 this.bot.onClientMessage(session, sofa);
               }
             }

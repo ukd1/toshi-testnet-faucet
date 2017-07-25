@@ -37,12 +37,16 @@ class Config {
     this.paymentKey = wallet.derive_path("m/44'/60'/0'/0/0");
     this.tokenIdAddress = this.identityKey.address;
     this.paymentAddress = this.paymentKey.address;
-
   }
 
   set storageUrl(s) {
     if (s.startsWith('postgres://') || s.startsWith('postgresql://')) {
       this.storage.postgres = {url: s};
+      // if sslmode is in the postgres URL prefer that
+      let sslmode = /^.*sslmode=([^&]+).*$/.exec(s);
+      if (sslmode) {
+        this.storage.sslmode = sslmode[1];
+      }
     } else if (s.startsWith('sqlite://')) {
       this.storage.sqlite = {url: s};
     } else {

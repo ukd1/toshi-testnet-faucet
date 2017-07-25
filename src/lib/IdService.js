@@ -1,4 +1,5 @@
 const fetch = require('./ServiceClient');
+const Logger = require('./Logger');
 
 function getUrl(path, proto) {
   var endpoint;
@@ -40,6 +41,7 @@ class IdService {
       }
       return user;
     }).catch((err) => {
+      Logger.error("got error: " + err);
       return null;
     });
   }

@@ -52,7 +52,7 @@ class Console {
           prompt()
         }
       } catch(e) {
-        console.log("On Message Error: "+e);
+        console.log("On Message Error: " + e);
       }
     });
     this.subscriber.subscribe(this.channelName);

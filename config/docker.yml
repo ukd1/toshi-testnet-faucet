@@ -1,3 +1,4 @@
+stage: production
 server: https://chat.service.tokenbrowser.com
 token_ethereum_service_url: https://ethereum.service.tokenbrowser.com
 token_id_service_url: https://identity.service.tokenbrowser.com

@@ -1,3 +1,4 @@
+stage: development
 server: https://token-chat-service-development.herokuapp.com
 token_ethereum_service_url: https://token-eth-service-development.herokuapp.com
 token_id_service_url: https://token-id-service-development.herokuapp.com
@@ -7,3 +8,4 @@ redis:
     timeout: 2000
 storage:
   envKey: DATABASE_URL
+  sslmode: require
