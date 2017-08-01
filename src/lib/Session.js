@@ -166,9 +166,6 @@ class Session {
             this.user = user;
             onReady();
           })
-          .catch((err) => {
-            Logger.error("unable to get user details for user: " + this.address)
-          });
       } else {
         this.user = {};
         onReady();

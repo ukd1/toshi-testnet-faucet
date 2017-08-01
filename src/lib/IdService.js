@@ -41,7 +41,7 @@ class IdService {
       }
       return user;
     }).catch((err) => {
-      Logger.error("got error: " + err);
+      Logger.error(err);
       return null;
     });
   }
@@ -62,6 +62,9 @@ class IdService {
         cached_users[user.token_id] = cached_users_pa[address];
       }
       return user;
+    }).catch((err) => {
+      Logger.error(err);
+      return null;
     });
   }
 }

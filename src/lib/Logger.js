@@ -2,6 +2,8 @@ const wrap = require('word-wrap');
 const chalk = require('chalk');
 const BN = require('bn.js');
 
+process.on('unhandledRejection', err => Logger.error(err));
+
 // NOTE: If these things also depend on Logger they get caught in a dependency loop,
 // this is a hacky way to break that loop
 let Fiat;
@@ -74,7 +76,7 @@ class Logger {
     } else {
       Logger.info(Logger.colorPrefix('\u21D0  ', wrap(sofa.string, {width: 60, cut: true}), chalk.green, chalk.grey));
     }
-    Logger.log('\n');
+    Logger.info('\n');
   }
 
   static receivedMessage(sofa, user) {
@@ -89,7 +91,7 @@ class Logger {
     } else {
       Logger.info(Logger.colorPrefix('\u21D2  ', wrap(sofa.string, {width: 60, cut: true}), chalk.yellow, chalk.grey));
     }
-    Logger.log('\n');
+    Logger.info('\n');
   }
 
   static receivedPaymentUpdate(sofa, user, direction) {
@@ -129,31 +131,27 @@ class Logger {
 
   static debug(message) {
     if (LOG_LEVEL <= _log_levels['DEBUG']) {
-      Logger.log(Logger.color(getPrefix('D'), message, chalk.green));
+      console.log(Logger.color(getPrefix('D'), message, chalk.green));
     }
   }
 
   static info(message) {
     if (LOG_LEVEL <= _log_levels['INFO']) {
-      Logger.log(Logger.color(getPrefix('I'), message, chalk.green));
+      console.info(Logger.color(getPrefix('I'), message, chalk.green));
     }
   }
 
   static warning(message) {
     if (LOG_LEVEL <= _log_levels['WARN']) {
-      Logger.log(Logger.color(getPrefix('W'), message, chalk.yellow));
+      console.warn(Logger.color(getPrefix('W'), message, chalk.yellow));
     }
   }
 
   static error(message) {
-    if (LOG_LEVEL >= _log_levels['ERROR']) {
-      Logger.log(Logger.color(getPrefix('E'), wrap(message, {width: 60, cut: true}), chalk.red));
-      Logger.log('\n');
+    if (message && message.stack) { message = message.stack }
+    if (LOG_LEVEL <= _log_levels['ERROR']) {
+      console.error(Logger.color(getPrefix('E'), message, chalk.red));
     }
-  }
-
-  static log(o) {
-    console.log(o);
   }
 
 }
