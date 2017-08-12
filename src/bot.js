@@ -46,6 +46,7 @@ function onPayment(session, message) {
     if (message.status == 'confirmed') {
       // perform special action once the payment has been confirmed
       // on the network
+      sendMessage(session, `^^ 💰 💯`);
     } else if (message.status == 'error') {
       // oops, something went wrong with a payment we tried to send!
     }
@@ -53,18 +54,19 @@ function onPayment(session, message) {
     // handle payments sent to the bot
     if (message.status == 'unconfirmed') {
       // payment has been sent to the ethereum network, but is not yet confirmed
-      sendMessage(session, `Thanks for the payment! 🙏`);
+      sendMessage(session, `Thanks for the payment! The 💰 is used for the faucet! 🙏`);
     } else if (message.status == 'confirmed') {
       // handle when the payment is actually confirmed!
     } else if (message.status == 'error') {
-      sendMessage(session, `There was an error with your payment!🚫`);
+      sendMessage(session, `There was an error with your payment! EWPS. 👎 🚫`);
     }
   }
 }
 
 // STATES
 function welcome(session) {
-  sendMessage(session, `Hello, welcome to the faucet on Toshi!`)
+  sendMessage(session, `Hello, welcome to the faucet on Toshi! 💰💰💰`)
+  sendMessage(session, `If you want to say hi or ask for more features, ping @russell 🤗`)
 }
 
 function donate(session) {
@@ -83,7 +85,7 @@ function faucet(session) {
 
   Fiat.fetch().then((toEth) => {
     session.sendEth(toEth.USD(amt))
-    sendMessage(session, `Sent ${amt} 🤑`)
+    sendMessage(session, `Sent ${amt} 💰🤑💰`)
     sendMessage(session, `FYI you've recieved ${count} eth from the me so far 😎`)
   })
 }
@@ -91,8 +93,8 @@ function faucet(session) {
 // HELPERS
 function sendMessage(session, message) {
   let controls = [
-    {type: 'button', label: 'Donate', value: 'donate'},
-    {type: 'button', label: 'Get Eth', value: 'faucet'}
+    {type: 'button', label: 'Donate 💰', value: 'donate'},
+    {type: 'button', label: 'Get 💰', value: 'faucet'}
   ]
   session.reply(SOFA.Message({
     body: message,
