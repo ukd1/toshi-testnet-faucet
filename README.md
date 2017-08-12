@@ -1,28 +1,14 @@
-# Toshi SOFA App
+# Toshi Testnet Faucet.
 
-This repo helps you build a [Toshi app](https://www.toshi.org) in Javascript.
+This simple bot can:
+* take donations to the faucet
+* send you testnet monies
 
-The sample bot can:
+You can add it by messaging @TestnetFaucet, or scanning this qrcode:
 
-* send messages
-* send and request money
-* create simple UI for buttons and menus
-* store sessions and state for each user
+![@TestnetFaucet on Toshi](https://github.com/ukd1/toshi-testnet-faucet/raw/master/attachments/testnetfaucet.png)
 
-TODO
-
-* sending image messages
-* creating web view UIs
-
-## Launch your own Toshi app in 5 minutes
-
-Read our [guide to creating a Toshi app](http://developers.toshi.org/docs/creating-a-token-app).
-
-When ready, fork this repo and deploy it to Heroku.
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
-Then check out [`src/bot.js`](src/bot.js) to start changing the bot logic.
+Any suggestions, please feel free to message @russell on Toshi or open a ticket. Donations (of testnet eth only!) welcome to 0x2f7aad208e09c5bf1e07eba5702b48ba7731d165.
 
 ## Running locally with Docker
 
@@ -44,21 +30,8 @@ To reset the postgres database in your dev environment you can use
 docker-compose down -v
 ```
 
-## Architecture
-
-Deploying a Toshi app requires a few processes to run:
-
-* **toshi-headless-client**<br>
-  This is a client we provide (similar to the iOS or Android client) that provides a wrapper around the Toshi backend services. It also handles end-to-end encrypting all messages using the Signal protocol. It is written in Java and runs in the background, proxying all the requests to amd from your bot.
-* **redis**<br>
-  We use redis pub/sub to provide a connection between the toshi-headless-client and your bot.
-* **bot.js**<br>
-  This is where all your app logic lives.
-* **postgres**<br>
-  Postgres is used to store session data so you can persist state for each user who talks to your bot (similar to cookies in a web browser).
-
-![diagram](docs/images/app-architecture.png)
 
 ## See also
 
 * [https://www.toshi.org]
+* [http://developers.toshi.org/docs/creating-a-token-app]

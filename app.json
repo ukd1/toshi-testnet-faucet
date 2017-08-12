@@ -1,7 +1,7 @@
 {
-  "name": "Toshi SOFA App",
-  "description": "Foundation for building a SOFA app for Toshi (Chat Bot / Web View)",
-  "repository": "https://github.com/toshiapp/toshi-sofa-app",
+  "name": "Toshi Testnet Faucet",
+  "description": "A really simple Testnet Faucet based on the sample app - https://github.com/toshiapp/toshi-sofa-app",
+  "repository": "https://github.com/udk1/toshi-testnet-faucet",
   "env": {
     "TOKEN_APP_SEED": {
       "description": "12 word secret backup phrase"
