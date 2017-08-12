@@ -83,7 +83,8 @@ function faucet(session) {
 
   Fiat.fetch().then((toEth) => {
     session.sendEth(toEth.USD(amt))
-    sendMessage(session, `Sent ${amt}. You've recieved ${count} eth from the faucet so far.`)
+    sendMessage(session, `Sent ${amt} 🤑`)
+    sendMessage(session, `FYI you've recieved ${count} eth from the me so far 😎`)
   })
 }
 
